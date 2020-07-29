@@ -2,8 +2,9 @@ import { createStore } from "redux"
 import rootReducer from "../reducers";
 
 const initialState = {
-    
-    openModal: false
+    isCreateStudModalOpen: false,
+    isAnotherModalOpen: false,
+
 }
 
 export default function configureStore(){

@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
-    show: () =>
-      dispatch({
-        type: "show",
-        
-      }),
+      hide: () => dispatch({type: "HIDE"})
   });
       
 class CreateStudInfo extends Component {
@@ -20,6 +16,7 @@ class CreateStudInfo extends Component {
         dateOfBirth: "",
         country: "",
         email: "",
+
     }
 
     createstudent = async () => {
@@ -44,7 +41,7 @@ class CreateStudInfo extends Component {
         //const { onClose, show } = this.props
 
         return (
-            <Modal show={this.props.show()} onHide={this.props.openModel}>
+            <Modal show={this.props.isModalOpen} onHide={this.props.hide}>
                 <Modal.Header closeButton>
                     <Modal.Title>Insert student in catalogue</Modal.Title>
                 </Modal.Header>
@@ -96,7 +93,7 @@ class CreateStudInfo extends Component {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.props.openModel}>
+                    <Button variant="secondary" onClick={this.props.hide}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={this.createstudent}>

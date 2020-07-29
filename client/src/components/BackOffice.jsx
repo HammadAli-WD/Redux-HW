@@ -3,11 +3,12 @@ import SingleStudInfo from "./SingleStudInfo"
 import { Col, Container, Row, Button } from 'react-bootstrap'
 import CreateStudInfo from './CreateStudInfo'
 import { connect } from "react-redux";
+
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
     show: () =>
       dispatch({
-        type: "show",
+        type: "SHOW",
         
       }),
   });
@@ -26,7 +27,6 @@ class BackOffice extends Component {
                 <CreateStudInfo 
                             onNewStudInfo={(StudInfo)=> this.setState({
                                 students: this.state.students.data.concat(StudInfo),
-                                openModal: false
                             })}
                             />
 
