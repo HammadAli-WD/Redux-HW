@@ -10,10 +10,7 @@ import Edit from "./components/Edit"
 import Student from "./components/Student"
 
 class App extends React.Component {
-
-  /* state = {
-    books:[]
-  } */
+ 
 
   render() {
     return (
