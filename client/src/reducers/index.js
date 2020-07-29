@@ -5,12 +5,7 @@ export default function (state = {}, action) {
             ...state,
             openModal: true
         };
-      case "onClose":       
-      return {
-        ...state,
-        openModal: false
-     }
-  
+      
       
       default:
         return state;
