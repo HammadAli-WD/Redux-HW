@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import SingleStudInfo from "./SingleStudInfo"
 import { Col, Container, Row, Button } from 'react-bootstrap'
 import CreateStudInfo from './CreateStudInfo'
-
+import { connect } from "react-redux";
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+    onClose: () =>
+      dispatch({
+        type: "onClose",
+        
+      }),
+  });
 class BackOffice extends Component {
    state = {
     students: {
         data:[]
     },
-       openModal: false
+      
    }
 
     render() {
@@ -16,7 +24,7 @@ class BackOffice extends Component {
             <Container>
                 <h1>Welcome to the backoffice <Button onClick={() => this.setState({ openModal: true})}>Create New</Button></h1>
                 <CreateStudInfo show={this.state.openModal} 
-                            onClose={() => this.setState({ openModal: false})}
+                            onClose={() => this.props.onClose()}
                             onNewStudInfo={(StudInfo)=> this.setState({
                                 students: this.state.students.data.concat(StudInfo),
                                 openModal: false
@@ -46,4 +54,4 @@ class BackOffice extends Component {
     }
 }
 
-export default BackOffice
+export default connect(mapStateToProps, mapDispatchToProps)(BackOffice)
