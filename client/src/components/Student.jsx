@@ -110,7 +110,7 @@ class Student extends Component {
       //<h3 className="mt-5" > Projects Information</h3>
                 <Row className="mt-5" >
                
-               {/*  {this.props.projects.map((project,index) => 
+                {this.props.projects.map((project,index) => 
                 <Col key={`col-${index}`} md={4} sm={6} lg={2} >
                      
                    <ListGroup as="ul">
@@ -121,7 +121,7 @@ class Student extends Component {
                     
                     </ListGroup>
                 </Col>
-                )}  */}
+                )} 
                 </Row>
      
     )
