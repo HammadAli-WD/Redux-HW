@@ -8,7 +8,7 @@ const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
     show: () =>
       dispatch({
-        type: "SHOW",
+        type: "SHOW_CREATE_STUD_MODAL",
         
       }),
   });

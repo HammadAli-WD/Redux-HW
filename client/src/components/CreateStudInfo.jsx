@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
-      hide: () => dispatch({type: "HIDE"})
+      hide: () => dispatch({type: "HIDE_CREATE_STUD_MODAL"})
   });
       
 class CreateStudInfo extends Component {
@@ -33,7 +33,7 @@ class CreateStudInfo extends Component {
         })
         
         if (studentResp.ok) {// check if the response is ok
-            this.props.onNewstudent(newstudent)// tell the parent we have a new kid in town
+            this.props.onNewStudInfo(newstudent)// tell the parent we have a new kid in town
         }
     }
 

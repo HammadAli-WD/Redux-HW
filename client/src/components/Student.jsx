@@ -1,51 +1,44 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Image,
-  Card,
-  Accordion,
-  Button,
-  Modal,
-  ListGroup,
-  Row,
-  Col,
-  Form,
-  Spinner,
-} from "react-bootstrap";
+import { ListGroup, Row, Col,} from "react-bootstrap";
+import { connect } from "react-redux";
+import { fetchProjects } from "../actions/projectAction";
+
 //import "./StudentDetails.css";
 //import TableForProjects from "./TableForProjects";
 
 const apiKey = process.env.REACT_APP_API_KEY || "http://localhost:3000";
+const mapStateToProps = (state) => state;
 
-class Student extends Component {
-  state = {
-    students: {
-        data:[]
-    },
-    projects: {
-     data:[]
- }
-}
-  fetchData = async () => {
+
+
+/* const fetchData = async() => {
+  return async (dispatch, getState) => {
     let resp = await fetch(
       apiKey + "/student/" + this.props.match.params.id + "/projects"
     );
 
     if (resp.ok) {
       let projects = await resp.json();
-      console.log(projects)
-      this.setState({
+      //console.log(projects)
+      dispatch({
         projects,
       });
     } else {
-      alert("Something went wrong!");
+      alert("Not fetching!");
     }
   };
+}; */
+
+class Student extends Component {
+  
+  /* fetchData = async () => {
+    
+  }; */
 
   fetchUser = async () => {
     let resp = await fetch(apiKey + "/student/" + this.props.match.params.id);
     let data = await resp.json();
-    console.log(data)
+    //console.log(data)
     if (resp.ok) {
       this.setState({
         students: data,
@@ -54,7 +47,7 @@ class Student extends Component {
   };
 
   componentDidMount = () => {
-    this.fetchData();
+    this.props.dispatch(fetchProjects());
     this.fetchUser();
   };
 
@@ -102,11 +95,22 @@ class Student extends Component {
   }; */
 
   render() {
+    const { error, loading, projects } = this.props;
+    console.log(projects)
+
+
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
     return (
       //<h3 className="mt-5" > Projects Information</h3>
                 <Row className="mt-5" >
                
-                {this.state.projects.data.map((project,index) => 
+               {/*  {this.props.projects.map((project,index) => 
                 <Col key={`col-${index}`} md={4} sm={6} lg={2} >
                      
                    <ListGroup as="ul">
@@ -117,7 +121,7 @@ class Student extends Component {
                     
                     </ListGroup>
                 </Col>
-                )} 
+                )}  */}
                 </Row>
      
     )
@@ -125,4 +129,4 @@ class Student extends Component {
 }
 }
 
-export default Student;
+export default connect(mapStateToProps)(Student);

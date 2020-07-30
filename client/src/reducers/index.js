@@ -3,14 +3,16 @@ export default function (state = {}, action) {
       case "SHOW_CREATE_STUD_MODAL":
         return {
             ...state,
-            isCreateStudModalOpen: true
+            isModalOpen: true
         };
       
         case "HIDE_CREATE_STUD_MODAL":
             return {
                 ...state,
-                isCreateStudModalOpen: false
+                isModalOpen: false
             };
+
+            
       default:
         return state;
     }
