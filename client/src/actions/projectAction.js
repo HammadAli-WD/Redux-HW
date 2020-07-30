@@ -6,7 +6,7 @@ export const FETCH_PROJECTS_FAILURE = 'FETCH_PROJECTS_FAILURE';
 export function fetchProjects() {
     return dispatch => {
       dispatch(fetchProjectsBegin());
-      return fetch(apiKey + "/student" )
+      return fetch(apiKey + "/student/" + this.props.match.params.id + "/projects")
         .then(handleErrors)
         .then(res => res.json())
        
