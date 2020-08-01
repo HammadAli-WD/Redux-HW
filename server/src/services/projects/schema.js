@@ -16,9 +16,17 @@ const projectSchema = new Schema({
     ref: "student",
     
   },
+  repourl: {
+    type: String,
+  },
+  liveurl: {
+    type: String,
+  },
     
   
-})
+},
+{timestamps: true}
+)
 
 const projectModel = mongoose.model("project", projectSchema)
 
