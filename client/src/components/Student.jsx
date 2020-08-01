@@ -1,17 +1,61 @@
 import React, { Component } from "react";
 import { ListGroup, Row, Col,} from "react-bootstrap";
 import { connect } from "react-redux";
-import { fetchProjects } from "../actions/projectAction";
-
 //import "./StudentDetails.css";
 //import TableForProjects from "./TableForProjects";
 
-const apiKey = process.env.REACT_APP_API_KEY || "http://localhost:3000";
-const mapStateToProps = (state) => state;
+//const apiKey = process.env.REACT_APP_API_KEY || "http://localhost:3000";
+const mapStateToProps = (state, ownProps) => {console.log(ownProps.match.params.id)
+  /* console.log(state) */
+  return {...state,
+     id: ownProps.match.params.id} };
+     //console.log(this.props.id)
 
+const mapDispatchToProps = (dispatch) => ({
+  
+    setLoader: () =>
+        dispatch({
+            type: "SET_LOADER",
+            payload: true
+        }),
+    unSetLoader: () =>
+        dispatch({
+            type: "UNSET_LOADER",
+            payload: false
+        }),
+    setError: (status) =>
+        dispatch({
+            type: "LOADING_ERROR",
+            payload: status
+        }),
+  
+    getProjectsThunk: (projects) => dispatch(getProjectsWithThunk(projects)),
+});
 
+const getProjectsWithThunk   = (projects, router) => {
+  
+  return  async (dispatch, getState) => {
+    const numOfProjects = "http://localhost:3000"
+    //const params = ownProps.match.params.id
+   console.log(this.props.params)
+   
+    await fetch(numOfProjects + `/student/${router.match.params.id}` + "/projects")
+    .then(response => response.json())
+    
+    .then(responseObject => {
+      projects = responseObject.data
+      
+      console.log("A thunk was used to dispatch this action", getState());
+      dispatch({
+        type: "GET_PROJECT_LIST",
+        payload: projects
+    });
+    })
+    
+};
+};
 
-/* const fetchData = async() => {
+/* const addItemWithThunk = async() => {
   return async (dispatch, getState) => {
     let resp = await fetch(
       apiKey + "/student/" + this.props.match.params.id + "/projects"
@@ -19,10 +63,8 @@ const mapStateToProps = (state) => state;
 
     if (resp.ok) {
       let projects = await resp.json();
-      //console.log(projects)
-      dispatch({
-        projects,
-      });
+      console.log(projects)
+      dispatch(projects);
     } else {
       alert("Not fetching!");
     }
@@ -35,20 +77,23 @@ class Student extends Component {
     
   }; */
 
-  fetchUser = async () => {
+  /* fetchUser = async () => {
     let resp = await fetch(apiKey + "/student/" + this.props.match.params.id);
     let data = await resp.json();
-    //console.log(data)
+    console.log(data)
     if (resp.ok) {
       this.setState({
         students: data,
       });
     }
   };
-
-  componentDidMount = () => {
-    this.props.dispatch(fetchProjects());
-    this.fetchUser();
+ */
+  componentDidMount = (a) => {
+   this.props.setLoader()
+    this.props.getProjectsThunk(a)
+    this.props.unSetLoader()
+   
+    //this.fetchUser();
   };
 
   
@@ -95,22 +140,12 @@ class Student extends Component {
   }; */
 
   render() {
-    const { error, loading, projects } = this.props;
-    console.log(projects)
-
-
-    if (error) {
-      return <div>Error! {error.message}</div>;
-    }
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    console.log(this.props.projects)
     return (
       //<h3 className="mt-5" > Projects Information</h3>
                 <Row className="mt-5" >
                
-                {this.props.projects.map((project,index) => 
+                {this.props.data.projects.length > 1 && this.props.data.projects.map((project,index) => 
                 <Col key={`col-${index}`} md={4} sm={6} lg={2} >
                      
                    <ListGroup as="ul">
@@ -129,4 +164,4 @@ class Student extends Component {
 }
 }
 
-export default connect(mapStateToProps)(Student);
+export default connect(mapStateToProps, mapDispatchToProps)(Student);
