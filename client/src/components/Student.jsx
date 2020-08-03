@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 //import TableForProjects from "./TableForProjects";
 
 //const apiKey = process.env.REACT_APP_API_KEY || "http://localhost:3000";
-const mapStateToProps = (state, ownProps) => {console.log(ownProps.match.params.id)
+const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps.match.params.id)
   /* console.log(state) */
   return {...state,
      id: ownProps.match.params.id} };
@@ -29,17 +30,17 @@ const mapDispatchToProps = (dispatch) => ({
             payload: status
         }),
   
-    getProjectsThunk: (projects) => dispatch(getProjectsWithThunk(projects)),
+    getProjectsThunk: (params) => dispatch(getProjectsWithThunk(params)),
 });
 
-const getProjectsWithThunk   = (projects, router) => {
+const getProjectsWithThunk = (params, projects) => {
   
   return  async (dispatch, getState) => {
     const numOfProjects = "http://localhost:3000"
     //const params = ownProps.match.params.id
-   console.log(this.props.params)
-   
-    await fetch(numOfProjects + `/student/${router.match.params.id}` + "/projects")
+
+    console.log('router', params)
+    await fetch(numOfProjects + `/student/`+ params  + "/projects")
     .then(response => response.json())
     
     .then(responseObject => {
@@ -88,9 +89,9 @@ class Student extends Component {
     }
   };
  */
-  componentDidMount = (a) => {
+  componentDidMount = () => {
    this.props.setLoader()
-    this.props.getProjectsThunk(a)
+    this.props.getProjectsThunk(this.props.match.params.id)
     this.props.unSetLoader()
    
     //this.fetchUser();
